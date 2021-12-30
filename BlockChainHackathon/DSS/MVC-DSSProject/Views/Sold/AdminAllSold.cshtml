@@ -1,0 +1,94 @@
+﻿@using EntityLayer.Concrete
+@using PagedList
+@using PagedList.Mvc
+@model PagedList.IPagedList<Sold>
+
+@{
+    ViewBag.Title = "AdminAllSold";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<body class="hold-transition sidebar-mini">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Satılmış İlanlar</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-striped projects">
+                    <thead>
+                        <tr>
+                            <th style="width: 1%">#</th>
+                            <th style="width: 10%">Satan Kişi</th>
+                            <th style="width: 10%">Alan Kişi</th>
+                            <th style="width: 10%">Önceki Hash</th>
+                            <th style="width: 10%">Son Hash</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            string color = "table table-success";
+                            string temp = "";
+                            int counter = 0;
+                        }
+
+                        @foreach (var item in Model)
+                        {
+                            if (counter % 2 == 0 || counter == 0)
+                            {
+                                <tr class="@color">
+                                    <td>@item.SoldID</td>
+                                    <td>@item.SellID</td>
+                                    <td>@item.User.UserName</td>
+                                    <td>@item.PrevHash</td>
+                                    <td>@item.LastHash</td>
+                                </tr>
+                                temp = item.LastHash.ToString();
+                                counter++;
+                            }
+                            else if (counter % 2 == 1)
+                            {
+                                if (temp != item.PrevHash.ToString())
+                                {
+                                    color = "table table-danger";
+                                }
+                                <tr class="@color">
+                                    <td>@item.SoldID</td>
+                                    <td>@item.SellID</td>
+                                    <td>@item.User.UserName</td>
+                                    <td>@item.PrevHash</td>
+                                    <td>@item.LastHash</td>
+                                </tr>
+                                counter++;
+                            }
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
+
+@Html.PagedListPager((IPagedList)Model, p => Url.Action("AdminAllSold", new { p }), new PagedListRenderOptions
+{
+    LiElementClasses = new List<string>
+{"page-link"}
+})

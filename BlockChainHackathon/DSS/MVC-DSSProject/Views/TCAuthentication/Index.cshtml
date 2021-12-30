@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Kimlik Doğrulama</h2>
+@using (Html.BeginForm("Index", "TCAuthentication", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.Label("Kullanıcının İsmi")<br />
+        @Html.TextBox("Name")
+        <br />
+        @Html.Label("Kullanıcının Soyadı")<br />
+        @Html.TextBox("Surname")
+        <br />
+        @Html.Label("Kullanıcının TC Kimlik Numarası")<br />
+        @Html.TextBox("TCNo")
+        <br />
+        @Html.Label("Kullanıcın Doğum Yılı")<br />
+        @Html.TextBox("Year")
+        <br /><br />
+        <button class="btn btn-success">Sorgula</button>
+    </div>
+} 

@@ -1,0 +1,37 @@
+﻿@model EntityLayer.Concrete.User
+
+@{
+    ViewBag.Title = "EditUser";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Kullanıcı Düzenleme Sayfası</h2>
+@using (Html.BeginForm("EditUser", "User", FormMethod.Post))
+{
+<div class="form-group">
+    <!-- Bunlar değiştirelemesin. Sabit olarak tablodann gelen değerler atansın. Bu değerlerin değişmesi yanlış çalışmaya yol açabilir! -->
+    @Html.HiddenFor(x => x.UserID)
+    @Html.HiddenFor(x => x.AuthorityID)
+    @Html.HiddenFor(x => x.AccountID)
+    @Html.HiddenFor(x => x.State)
+    @Html.HiddenFor(x=>x.UserPassword)
+
+    @Html.Label("Kullanıcı Adı")
+    @Html.TextBoxFor(x => x.UserName, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.UserName)
+    <br />
+    @Html.Label("Kullanıcı Soyadı")
+    @Html.TextBoxFor(x => x.UserSurname, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.UserSurname)
+    <br />
+    @Html.Label("Kullanıcı Mail Adresi")
+    @Html.TextBoxFor(x => x.UserMail, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.UserMail)
+    <br />
+    @Html.Label("TC Kimlik Numarası")
+    @Html.TextBoxFor(x => x.TCNumber, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.TCNumber)
+    <br />
+    <button class="btn btn-success">Kullanıcıyı Güncelle</button>
+</div>
+} 

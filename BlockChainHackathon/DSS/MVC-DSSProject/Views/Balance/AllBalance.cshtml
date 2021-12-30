@@ -1,0 +1,81 @@
+﻿@using EntityLayer.Concrete
+@using PagedList
+@using PagedList.Mvc
+@model PagedList.IPagedList<Balance>
+
+@{
+    ViewBag.Title = "AllBalance";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<body class="hold-transition sidebar-mini">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Onay Bekleyen Ödemeler</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-striped projects">
+                    <thead>
+                        <tr>
+                            <th style="width: 1%">#</th>
+                            <th style="width: 10%">Kullanıcı ID</th>
+                            <th style="width: 20%">Kullanıcı Adı Soyadı</th>
+                            <th style="width: 15%">Onay Değeri</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            if (item.State == false)
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td>@item.BalanceID</td>
+                                    <td>@item.UserID</td>
+                                    <td>@item.User.UserName @item.User.UserSurname</td>
+                                    <td>@item.BalanceValue</td>
+                                    <td class="project-actions text-right">
+                                        <!-- href: /Default/Headings/ at item.HeadingID  Satın Alınacak İtemin ID'sini gönder. '-->
+                                        <a class="btn btn-primary btn-sm" href="/Balance/AcceptBalance/@item.BalanceID">
+                                            <i class="fas fa-money-bill">
+                                            </i>
+                                            Onayla
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
+
+@Html.PagedListPager((IPagedList)Model, p => Url.Action("AllBalance", new { p }), new PagedListRenderOptions
+{
+    LiElementClasses = new List<string>
+{"page-link"}
+})

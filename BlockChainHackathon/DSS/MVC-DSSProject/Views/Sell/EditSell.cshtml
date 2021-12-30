@@ -1,0 +1,27 @@
+﻿@model EntityLayer.Concrete.Sell
+
+@{
+    ViewBag.Title = "EditSell";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Başlık Güncelleme Sayfası</h2>
+@using (Html.BeginForm("EditSell", "Sell", FormMethod.Post))
+{
+<div class="form-group">
+    @Html.HiddenFor(x => x.SellID)
+    @Html.HiddenFor(x => x.UserID)
+    @Html.HiddenFor(x => x.SellTime)
+    @Html.HiddenFor(x=>x.State)
+    @Html.Label("IP Adresi")
+    @Html.TextBoxFor(x => x.ServerIP, new { @class = "form-control" })
+    <br />
+    @Html.Label("Kapasite")
+    @Html.TextBoxFor(x => x.StorageSize, new { @class = "form-control" })
+    <br />
+    @Html.Label("Satış Değeri")
+    @Html.TextBoxFor(x => x.SellValue, new { @class = "form-control" })
+    <br />
+    <button class="btn btn-success">Güncelle</button>
+</div>
+}

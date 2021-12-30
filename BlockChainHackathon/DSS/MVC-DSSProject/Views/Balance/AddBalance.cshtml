@@ -1,0 +1,21 @@
+﻿@model EntityLayer.Concrete.Balance
+
+@{
+    ViewBag.Title = "AddBalance";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h1>Hesap Bakiye Güncelleme Talebi</h1>
+<br />
+
+<!-- Gidilecek Olan Action / Controller İsmi / Methodun Çalışma Zamanı-->
+@using (Html.BeginForm("AddBalance", "Balance", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.Label("Sisteme Tanımladığınız Ödeme Tutarınız")
+        @Html.TextBoxFor(x => x.BalanceValue, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.BalanceValue)
+        <br />
+        <button class="btn btn-info">Talebi Gönder</button>
+    </div>
+}

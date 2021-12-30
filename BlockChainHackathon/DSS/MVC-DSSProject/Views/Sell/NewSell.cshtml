@@ -1,0 +1,29 @@
+﻿@model EntityLayer.Concrete.Sell
+
+@{
+    ViewBag.Title = "NewSell";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h1>Yeni İlan Ekleme</h1>
+<br />
+
+<!-- Gidilecek Olan Action / Controller İsmi / Methodun Çalışma Zamanı-->
+@using (Html.BeginForm("NewSell", "Sell", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.Label("Sunucunun IP Adresi")
+        @Html.TextBoxFor(x => x.ServerIP, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.ServerIP)
+        <br />
+        @Html.Label("Depolama Alanı (GB/TB)")
+        @Html.TextBoxFor(x => x.StorageSize, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.StorageSize)
+        <br />
+        @Html.Label("Satış Değeri")
+        @Html.TextBoxFor(x => x.SellValue, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.SellValue)
+        <br />
+        <button class="btn btn-info">İlan Ekle</button>
+    </div>
+}

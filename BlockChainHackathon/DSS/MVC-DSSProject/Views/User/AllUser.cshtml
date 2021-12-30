@@ -1,0 +1,84 @@
+﻿@using EntityLayer.Concrete
+@model List<User>
+
+@{
+    ViewBag.Title = "AllUser";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<body class="hold-transition sidebar-mini">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Kullanıcılar</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="card card-solid">
+            <div class="card-body pb-0">
+                <div class="row d-flex align-items-stretch">
+                    <!-- Tablomuz içerisinde var olan yazar sayımız kadar card oluşturuyoruz. -->
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-12 col-sm-6 col-md-6 d-block align-items-stretch">
+                            <div class="card bg-light">
+                                <div class="card-header text-muted border-bottom-0">
+                                    @item.UserID
+                                </div>
+                                <div class="card-body pt-0">
+                                    <div class="row">
+                                        <div class="col-lg-7">
+                                            <h2 class="lead"><b>@item.UserName @item.UserSurname</b></h2>
+
+                                            @if (item.State == true)
+                                            {
+                                                <p class="text-blue text-sm"> <b>Hesap Durumu: </b> @item.State </p>
+                                            }
+                                            else
+                                            {
+                                                <p class="text-danger text-sm"><b>Hesap Durumu: </b> @item.State </p>
+                                            }
+
+                                            <ul class="ml-4 mb-0 fa-ul text-muted">
+                                                <li class="small"><span class="fa-li"><i class="fas fa-lg fa-user-alt"></i></span> Hesap Numarası: @item.AccountID </li>
+                                                <li class="small"><span class="fa-li"><i class="fas fa-lg fa-brain"></i></span> Yetki Numarası: @item.AuthorityID </li>
+                                            </ul>
+                                            <ul class="ml-4 mb-0 fa-ul text-muted">
+                                                <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Mail: @item.UserMail</li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-5 text-center">
+                                            <img src="~/Tema/dist/img/user1-128x128.jpg" alt="" class="img-circle img-fluid">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="text-right">
+                                        <!-- Düzenle -->
+                                        <a href="/User/EditUser/@item.UserID" class="btn btn-sm btn-primary">
+                                            <i class="fas fa-user"></i> Profili Düzenle
+                                        </a>
+                                        @if (item.AuthorityID == 1)
+                                        { }
+                                        else if (item.State == false)
+                                        {<a href="/User/ActiveDeleteUser/@item.UserID" class="btn btn-sm btn-success"> <i class="fas fa-fire"></i> Hesabı Aktif Et</a> }
+                                        else
+                                        {<a href="/User/ActiveDeleteUser/@item.UserID" class="btn btn-sm btn-danger"> <i class="fas fa-fire"></i> Hesabı Kapat</a>}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

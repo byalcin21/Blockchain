@@ -1,0 +1,85 @@
+﻿@using EntityLayer.Concrete
+@using PagedList
+@using PagedList.Mvc
+@model PagedList.IPagedList<Sell>
+
+@{
+    ViewBag.Title = "AllSell";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<body class="hold-transition sidebar-mini">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Mevcut Aktif Tüm İlanlar</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-striped projects">
+                    <thead>
+                        <tr>
+                            <th style="width: 1%">#</th>
+                            <th style="width: 20%">Satan Kullanıcı</th>
+                            <th style="width: 15%">Server Ip</th>
+                            <th style="width: 15%">Depolama Alanı</th>
+                            <th style="width: 15%">Satış Tutarı</th>
+                            <th style="width: 15%">İlan Tarihi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            if (item.State == false)
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td>@item.SellID</td>
+                                    <td>@item.User.UserName @item.User.UserSurname</td>
+                                    <td>@item.ServerIP</td>
+                                    <td>@item.StorageSize</td>
+                                    <td>@item.SellValue</td>
+                                    <td>@item.SellTime.ToShortDateString()</td>
+                                    <td class="project-actions text-right">
+                                        <!-- href: /Default/Headings/ at item.HeadingID  Satın Alınacak İtemin ID'sini gönder. '-->
+                                        <a class="btn btn-primary btn-sm" href="/Sold/BuyAndHash/@item.SellID">
+                                            <i class="fas fa-calculator">
+                                            </i>
+                                            Satın Al
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
+
+@Html.PagedListPager((IPagedList)Model, p => Url.Action("UserAllSell", new { p }), new PagedListRenderOptions
+{
+    LiElementClasses = new List<string>
+{"page-link"}
+})
+
